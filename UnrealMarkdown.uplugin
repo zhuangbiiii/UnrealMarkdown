@@ -1,0 +1,16 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "UnrealMarkdown",
+	"Description": "A simple markdown implemented for Unreal Engine.",
+	"Category": "UI",
+	"CreatedBy": "zhuangbiiii",
+	"CreatedByURL": "https://github.com/zhuangbiiii",
+	"DocsURL": "https://github.com/zhuangbiiii/UnrealMarkdown",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"EngineVersion": "5.0.0",
+	"CanContainContent": true,
+	"Installed": true
+}
