@@ -12,5 +12,17 @@
 	"SupportURL": "",
 	"EngineVersion": "5.0.0",
 	"CanContainContent": true,
-	"Installed": true
+	"Installed": true,
+	"Modules": [
+		{
+			"Name": "UnrealMarkdown",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		},
+		{
+			"Name": "UnrealMarkdownEditor",
+			"Type": "Editor",
+			"LoadingPhase": "Default"
+		}
+	]
 }
