@@ -305,7 +305,7 @@ private:
         }
 
         int32 ExportedCount = 0;
-        for (const UMarkdownAsset* MarkdownAsset : MarkdownAssets)
+        for (UMarkdownAsset* MarkdownAsset : MarkdownAssets)
         {
             if (!MarkdownAsset)
             {
