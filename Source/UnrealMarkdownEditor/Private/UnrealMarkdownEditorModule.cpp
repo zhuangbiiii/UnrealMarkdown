@@ -40,14 +40,15 @@ namespace
         }
     }
 
-    FString EnsureMarkdownExtension(FString Path)
+    FString EnsureMarkdownExtension(const FString& Path)
     {
-        if (!Path.EndsWith(TEXT(".md"), ESearchCase::IgnoreCase))
+        FString Result = Path;
+        if (!Result.EndsWith(TEXT(".md"), ESearchCase::IgnoreCase))
         {
-            Path += TEXT(".md");
+            Result += TEXT(".md");
         }
 
-        return Path;
+        return Result;
     }
 }
 
@@ -248,7 +249,7 @@ private:
         check(DesktopPlatform);
         check(MarkdownAsset);
 
-        const FString DefaultDirectory = MarkdownAsset->SourceFilePath.IsEmpty()
+        const FString InitialDirectory = MarkdownAsset->SourceFilePath.IsEmpty()
             ? FPaths::ProjectSavedDir()
             : FPaths::GetPath(MarkdownAsset->SourceFilePath);
 
@@ -257,7 +258,7 @@ private:
         const bool bSaved = DesktopPlatform->SaveFileDialog(
             ParentWindowHandle,
             LOCTEXT("ExportMarkdownDialogTitle", "Export Markdown Asset").ToString(),
-            DefaultDirectory,
+            InitialDirectory,
             MarkdownAsset->GetName() + TEXT(".md"),
             TEXT("Markdown files (*.md)|*.md"),
             EFileDialogFlags::None,
