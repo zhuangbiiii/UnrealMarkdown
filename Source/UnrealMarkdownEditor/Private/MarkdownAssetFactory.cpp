@@ -14,9 +14,9 @@ DEFINE_LOG_CATEGORY_STATIC(LogMarkdownAssetFactory, Log, All)
 
 namespace
 {
-    constexpr float ErrorNotificationDuration = 6.0f;
-    constexpr float WarningNotificationDuration = 5.0f;
-    constexpr float SuccessNotificationDuration = 3.0f;
+    constexpr float ErrorNotificationDurationSeconds = 6.0f;
+    constexpr float WarningNotificationDurationSeconds = 5.0f;
+    constexpr float SuccessNotificationDurationSeconds = 3.0f;
 }
 
 UMarkdownAssetFactory::UMarkdownAssetFactory()
@@ -134,20 +134,20 @@ void UMarkdownAssetFactory::ShowNotification(const FText& Message, ENotification
         return;
     }
 
-    float ExpireDuration = SuccessNotificationDuration;
+    float ExpireDuration = SuccessNotificationDurationSeconds;
     SNotificationItem::ECompletionState CompletionState = SNotificationItem::CS_Success;
 
     switch (Severity)
     {
     case ENotificationSeverity::Error:
-        ExpireDuration = ErrorNotificationDuration;
+        ExpireDuration = ErrorNotificationDurationSeconds;
         CompletionState = SNotificationItem::CS_Fail;
         break;
     case ENotificationSeverity::Warning:
-        ExpireDuration = WarningNotificationDuration;
+        ExpireDuration = WarningNotificationDurationSeconds;
         CompletionState = SNotificationItem::CS_None;
         break;
-    default:
+    default: // Success uses the initialized defaults above.
         break;
     }
 

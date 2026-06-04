@@ -19,7 +19,7 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Markdown", meta = (MultiLine = true))
     FString MarkdownText;
 
-    /** Absolute path of the source .md file when this asset was imported. */
+    /** Source file path (stored as an absolute path) when this asset was imported. */
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Markdown")
     FString SourceFilePath;
 };
