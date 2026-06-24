@@ -1,16 +1,36 @@
 {
 	"FileVersion": 3,
-	"Version": 1,
-	"VersionName": "1.0",
+	"Version": 2,
+	"VersionName": "2.0",
 	"FriendlyName": "UnrealMarkdown",
-	"Description": "A simple markdown implemented for Unreal Engine.",
+	"Description": "A Markdown asset system for Unreal Engine. Import, edit, preview, and export .md files as native engine assets.",
 	"Category": "UI",
 	"CreatedBy": "zhuangbiiii",
 	"CreatedByURL": "https://github.com/zhuangbiiii",
 	"DocsURL": "https://github.com/zhuangbiiii/UnrealMarkdown",
 	"MarketplaceURL": "",
 	"SupportURL": "",
-	"EngineVersion": "5.0.0",
+	"EngineVersion": "5.8.0",
 	"CanContainContent": true,
-	"Installed": true
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": true,
+	"Modules": [
+		{
+			"Name": "UnrealMarkdown",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		},
+		{
+			"Name": "UnrealMarkdownEditor",
+			"Type": "Editor",
+			"LoadingPhase": "Default"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "ToolsetRegistry",
+			"Enabled": true
+		}
+	]
 }
