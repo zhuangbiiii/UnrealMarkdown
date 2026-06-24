@@ -92,7 +92,6 @@ FString UMarkdownToolset::SetMarkdownContent(const FString& AssetPath, const FSt
 	Md->SetContent(NewContent);
 	Md->MarkPackageDirty();
 
-	// Save the package
 	UPackage* Package = Md->GetOutermost();
 	if (Package)
 	{
@@ -107,7 +106,6 @@ FString UMarkdownToolset::SetMarkdownContent(const FString& AssetPath, const FSt
 
 FString UMarkdownToolset::CreateMarkdownFile(const FString& AssetPath, const FString& InitialContent)
 {
-	// Parse path: /Game/Folder/AssetName
 	FString PackagePath = AssetPath;
 	FString AssetName;
 	int32 LastSlash;
@@ -122,38 +120,19 @@ FString UMarkdownToolset::CreateMarkdownFile(const FString& AssetPath, const FSt
 		PackagePath = TEXT("/Game");
 	}
 
-	if (AssetName.IsEmpty())
-	{
-		return TEXT("Error: Invalid asset name.");
-	}
+	if (AssetName.IsEmpty()) return TEXT("Error: Invalid asset name.");
+	if (LoadMarkdownAsset(AssetPath)) return FString::Printf(TEXT("Error: Asset already exists: %s"), *AssetPath);
 
-	// Check if already exists
-	if (LoadMarkdownAsset(AssetPath))
-	{
-		return FString::Printf(TEXT("Error: Asset already exists: %s"), *AssetPath);
-	}
-
-	// Create the package
 	UPackage* Package = CreatePackage(*(PackagePath / AssetName));
-	if (!Package)
-	{
-		return TEXT("Error: Failed to create package.");
-	}
+	if (!Package) return TEXT("Error: Failed to create package.");
 
-	// Create the object
 	UMarkdownFile* NewAsset = NewObject<UMarkdownFile>(Package, UMarkdownFile::StaticClass(), *AssetName, RF_Public | RF_Standalone);
-	if (!NewAsset)
-	{
-		return TEXT("Error: Failed to create UMarkdownFile object.");
-	}
+	if (!NewAsset) return TEXT("Error: Failed to create UMarkdownFile object.");
 
 	NewAsset->Content = InitialContent;
 	NewAsset->MarkPackageDirty();
-
-	// Notify asset registry
 	FAssetRegistryModule::AssetCreated(NewAsset);
 
-	// Save
 	FSavePackageArgs SaveArgs;
 	SaveArgs.TopLevelFlags = RF_Public | RF_Standalone;
 	SaveArgs.SaveFlags = SAVE_NoError;
@@ -165,15 +144,10 @@ FString UMarkdownToolset::CreateMarkdownFile(const FString& AssetPath, const FSt
 FString UMarkdownToolset::ExportMarkdownFile(const FString& AssetPath, const FString& OutputFilePath)
 {
 	UMarkdownFile* Md = LoadMarkdownAsset(AssetPath);
-	if (!Md)
-	{
-		return FString::Printf(TEXT("Error: Asset not found: %s"), *AssetPath);
-	}
+	if (!Md) return FString::Printf(TEXT("Error: Asset not found: %s"), *AssetPath);
 
 	if (FFileHelper::SaveStringToFile(Md->Content, *OutputFilePath))
-	{
-		return FString::Printf(TEXT("OK: Exported %s → %s"), *AssetPath, *OutputFilePath);
-	}
+		return FString::Printf(TEXT("OK: Exported %s -> %s"), *AssetPath, *OutputFilePath);
 	return FString::Printf(TEXT("Error: Failed to write to %s"), *OutputFilePath);
 }
 
@@ -181,14 +155,11 @@ TArray<FString> UMarkdownToolset::SearchMarkdownFiles(const FString& SearchTerm)
 {
 	TArray<FString> Matches;
 	FString LowerTerm = SearchTerm.ToLower();
-
 	for (const FAssetData& Data : GetAllMarkdownAssets())
 	{
 		UMarkdownFile* Md = LoadMarkdownAsset(Data.GetSoftObjectPath().ToString());
 		if (Md && Md->Content.ToLower().Contains(LowerTerm))
-		{
 			Matches.Add(Data.GetSoftObjectPath().ToString());
-		}
 	}
 	Matches.Sort();
 	return Matches;

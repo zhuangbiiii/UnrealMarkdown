@@ -3,15 +3,12 @@
 #include "UnrealMarkdownEditor.h"
 #include "MarkdownFile.h"
 #include "MarkdownAssetEditor.h"
-#include "MarkdownToolset.h"
 
 #include "AssetToolsModule.h"
 #include "IAssetTools.h"
 #include "Misc/MessageDialog.h"
-#include "Styling/AppStyle.h"
+#include "MarkdownStyleCompat.h"
 #include "UObject/Class.h"
-#include "ToolsetRegistry/UToolsetRegistry.h"
-#include "Misc/CoreDelegates.h"
 
 #define LOCTEXT_NAMESPACE "FUnrealMarkdownEditorModule"
 
@@ -70,29 +67,10 @@ void FUnrealMarkdownEditorModule::StartupModule()
 {
 	RegisterAssetTypeActions();
 	FMarkdownAssetEditor::RegisterToolkit();
-
-	// Defer toolset registration until the editor and ToolsetRegistry are fully ready.
-	// In "Default" loading phase, some dependent subsystems may not be initialized yet.
-	FCoreDelegates::GetOnPostEngineInit().AddLambda([this]()
-	{
-		if (UToolsetRegistry::IsAvailable())
-		{
-			UToolsetRegistry::RegisterToolsetClass(UMarkdownToolset::StaticClass());
-			UE_LOG(LogTemp, Log, TEXT("UnrealMarkdownEditor: MarkdownToolset registered with ToolsetRegistry."));
-		}
-		else
-		{
-			UE_LOG(LogTemp, Warning, TEXT("UnrealMarkdownEditor: ToolsetRegistry not available, Markdown MCP tools will not be exposed."));
-		}
-	});
 }
 
 void FUnrealMarkdownEditorModule::ShutdownModule()
 {
-	if (UToolsetRegistry::IsAvailable())
-	{
-		UToolsetRegistry::UnregisterToolsetClass(UMarkdownToolset::StaticClass());
-	}
 	UnregisterAssetTypeActions();
 }
 

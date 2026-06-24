@@ -13,7 +13,7 @@
 #include "IDesktopPlatform.h"
 #include "Misc/FileHelper.h"
 #include "Misc/MessageDialog.h"
-#include "Styling/AppStyle.h"
+#include "MarkdownStyleCompat.h"
 #include "Widgets/Docking/SDockTab.h"
 #include "Widgets/Text/SMultiLineEditableText.h"
 #include "Widgets/Layout/SScrollBox.h"
@@ -89,12 +89,12 @@ void FMarkdownAssetEditor::RegisterTabSpawners(const TSharedRef<FTabManager>& In
 	InTabManager->RegisterTabSpawner(EditTabId,
 		FOnSpawnTab::CreateSP(this, &FMarkdownAssetEditor::SpawnTab_Edit))
 		.SetDisplayName(LOCTEXT("EditTab", "Edit"))
-		.SetIcon(FSlateIcon(FAppStyle::GetAppStyleSetName(), "LevelEditor.Tabs.Viewports"));
+		.SetIcon(FSlateIcon(MARKDOWN_STYLE::GetAppStyleSetName(), "LevelEditor.Tabs.Viewports"));
 
 	InTabManager->RegisterTabSpawner(PreviewTabId,
 		FOnSpawnTab::CreateSP(this, &FMarkdownAssetEditor::SpawnTab_Preview))
 		.SetDisplayName(LOCTEXT("PreviewTab", "Preview"))
-		.SetIcon(FSlateIcon(FAppStyle::GetAppStyleSetName(), "LevelEditor.Tabs.Outliner"));
+		.SetIcon(FSlateIcon(MARKDOWN_STYLE::GetAppStyleSetName(), "LevelEditor.Tabs.Outliner"));
 }
 
 void FMarkdownAssetEditor::UnregisterTabSpawners(const TSharedRef<FTabManager>& InTabManager)
@@ -130,7 +130,7 @@ void FMarkdownAssetEditor::ExtendToolbar()
 					NAME_None,
 					LOCTEXT("SaveBtn", "Save"),
 					LOCTEXT("SaveBtnTip", "Save content to asset"),
-					FSlateIcon(FAppStyle::GetAppStyleSetName(), "AssetEditor.SaveAsset"));
+					FSlateIcon(MARKDOWN_STYLE::GetAppStyleSetName(), "AssetEditor.SaveAsset"));
 			}
 			ToolbarBuilder.EndSection();
 
@@ -141,7 +141,7 @@ void FMarkdownAssetEditor::ExtendToolbar()
 					NAME_None,
 					LOCTEXT("ExportBtn", "Export"),
 					LOCTEXT("ExportBtnTip", "Export to .md file on disk"),
-					FSlateIcon(FAppStyle::GetAppStyleSetName(), "AssetEditor.SaveAsset.Greyscale"));
+					FSlateIcon(MARKDOWN_STYLE::GetAppStyleSetName(), "AssetEditor.SaveAsset.Greyscale"));
 			}
 			ToolbarBuilder.EndSection();
 		}

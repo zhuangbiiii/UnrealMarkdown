@@ -5,7 +5,7 @@
 #include "Widgets/Layout/SBorder.h"
 #include "Widgets/Layout/SScrollBox.h"
 #include "Widgets/Text/STextBlock.h"
-#include "Styling/AppStyle.h"
+#include "MarkdownStyleCompat.h"
 
 void SMarkdownPreview::Construct(const FArguments& InArgs)
 {
@@ -14,7 +14,7 @@ void SMarkdownPreview::Construct(const FArguments& InArgs)
 	ChildSlot
 	[
 		SNew(SBorder)
-		.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
+		.BorderImage(MARKDOWN_STYLE::GetBrush("ToolPanel.GroupBorder"))
 		.Padding(10.0f)
 		[
 			SNew(SScrollBox)
@@ -128,7 +128,7 @@ int32 SMarkdownPreview::ParseBlock(const TArray<FString>& Lines, int32 StartInde
 		Box->AddSlot().AutoHeight().Padding(0, 8)
 		[
 			SNew(SBorder)
-			.BorderImage(FAppStyle::GetBrush("WhiteBrush"))
+			.BorderImage(MARKDOWN_STYLE::GetBrush("WhiteBrush"))
 			.BorderBackgroundColor(FLinearColor(0.3f, 0.3f, 0.3f))
 			.DesiredSizeScale(FVector2D(1.0f, 1.0f))
 		];
@@ -154,7 +154,7 @@ int32 SMarkdownPreview::ParseBlock(const TArray<FString>& Lines, int32 StartInde
 		Box->AddSlot().AutoHeight().Padding(4, 2, 4, 8)
 		[
 			SNew(SBorder)
-			.BorderImage(FAppStyle::GetBrush("ToolPanel.DarkGroupBorder"))
+			.BorderImage(MARKDOWN_STYLE::GetBrush("ToolPanel.DarkGroupBorder"))
 			.Padding(8.0f)
 			[CodeBox]
 		];
@@ -167,7 +167,7 @@ int32 SMarkdownPreview::ParseBlock(const TArray<FString>& Lines, int32 StartInde
 		Box->AddSlot().AutoHeight().Padding(8, 2, 0, 2)
 		[
 			SNew(SBorder)
-			.BorderImage(FAppStyle::GetBrush("WhiteBrush"))
+			.BorderImage(MARKDOWN_STYLE::GetBrush("WhiteBrush"))
 			.BorderBackgroundColor(FLinearColor(0.3f, 0.5f, 0.9f, 0.6f))
 			.Padding(FMargin(8, 2, 2, 2))
 			[
@@ -271,7 +271,7 @@ TSharedRef<SWidget> SMarkdownPreview::BuildInlineText(const FString& Line, const
 				HBox->AddSlot().AutoWidth()
 				[
 					SNew(SBorder)
-					.BorderImage(FAppStyle::GetBrush("ToolPanel.DarkGroupBorder"))
+					.BorderImage(MARKDOWN_STYLE::GetBrush("ToolPanel.DarkGroupBorder"))
 					.Padding(FMargin(2, 0))
 					[
 						SNew(STextBlock).Text(FText::FromString(Code))

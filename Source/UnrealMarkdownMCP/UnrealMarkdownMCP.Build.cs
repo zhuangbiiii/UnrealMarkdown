@@ -1,10 +1,11 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
+// UnrealMarkdownMCP — MCP toolset (UE 5.8+ only)
 
 using UnrealBuildTool;
 
-public class UnrealMarkdownEditor : ModuleRules
+public class UnrealMarkdownMCP : ModuleRules
 {
-	public UnrealMarkdownEditor(ReadOnlyTargetRules Target) : base(Target)
+	public UnrealMarkdownMCP(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 
@@ -21,20 +22,10 @@ public class UnrealMarkdownEditor : ModuleRules
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"Slate",
-				"SlateCore",
-				"EditorStyle",
-				"InputCore",
 				"UnrealEd",
-				"AssetTools",
 				"AssetRegistry",
-				"PropertyEditor",
-				"ToolMenus",
-				"MainFrame",
-				"ApplicationCore",
-				"AppFramework",
+				"ToolsetRegistry",
 			}
 		);
-
 	}
 }

@@ -1,4 +1,5 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
+// MCP toolset — only compiled on UE 5.8+
 
 #pragma once
 
