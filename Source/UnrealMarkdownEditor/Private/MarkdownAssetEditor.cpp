@@ -123,17 +123,6 @@ void FMarkdownAssetEditor::ExtendToolbar()
 	{
 		static void FillToolbar(FToolBarBuilder& ToolbarBuilder, FMarkdownAssetEditor* Editor)
 		{
-			ToolbarBuilder.BeginSection("File");
-			{
-				ToolbarBuilder.AddToolBarButton(
-					FUIAction(FExecuteAction::CreateRaw(Editor, &FMarkdownAssetEditor::OnSave)),
-					NAME_None,
-					LOCTEXT("SaveBtn", "Save"),
-					LOCTEXT("SaveBtnTip", "Save content to asset"),
-					FSlateIcon(MARKDOWN_STYLE::GetAppStyleSetName(), "AssetEditor.SaveAsset"));
-			}
-			ToolbarBuilder.EndSection();
-
 			ToolbarBuilder.BeginSection("Export");
 			{
 				ToolbarBuilder.AddToolBarButton(
