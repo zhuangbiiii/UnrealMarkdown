@@ -5,7 +5,7 @@ A Markdown asset system for Unreal Engine 5.8 — import, create, edit, preview,
 ## v2 New Features
 
 | Feature | Description |
-|---|---|
+| --- | --- |
 | **Markdown Assets** | `.md` files are now first-class engine assets (`UMarkdownFile`), like `UStaticMesh` |
 | **Import .md / .txt** | Drag `.md` files into Content Browser to import; `.txt` files prompt to confirm import as Markdown |
 | **Create New** | Right-click in Content Browser → Miscellaneous → Markdown File |
@@ -16,7 +16,7 @@ A Markdown asset system for Unreal Engine 5.8 — import, create, edit, preview,
 
 ## Architecture
 
-```
+```text
 Plugins/UnrealMarkdown/
 ├── UnrealMarkdown.uplugin          # v2 plugin descriptor
 ├── Source/
@@ -55,6 +55,7 @@ Plugins/UnrealMarkdown/
 ### Edit a MarkdownFile
 
 Double-click the asset to open the **Markdown Editor**:
+
 - **Edit tab** (left): Raw markdown text editor
 - **Preview tab** (right): Raw text preview (v2 shows plain text; v1's RichText renderer is available via Blueprint widgets)
 - **Save** button: Saves the asset package
@@ -62,7 +63,7 @@ Double-click the asset to open the **Markdown Editor**:
 
 ### Blueprint API
 
-```
+```text
 // Get content
 Content = MarkdownFile->Content
 
@@ -95,7 +96,7 @@ Md->MarkPackageDirty();
 ## Extension Points
 
 | Interface | Purpose |
-|---|---|
+| --- | --- |
 | `FAssetTypeActions_MarkdownFile` | Customize right-click menu, asset color, categories |
 | `FMarkdownAssetEditor` | Override `RegisterTabSpawners` to add custom tabs (e.g., rendered HTML preview) |
 | `UMarkdownFileFactory` | Extend `FactoryCreateFile` for additional file formats |
