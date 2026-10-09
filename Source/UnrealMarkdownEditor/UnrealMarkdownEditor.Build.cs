@@ -15,14 +15,14 @@ public class UnrealMarkdownEditor : ModuleRules
 				"CoreUObject",
 				"Engine",
 				"UnrealMarkdown",
+				"Slate",
+				"SlateCore",
 			}
 		);
 
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"Slate",
-				"SlateCore",
 				"EditorStyle",
 				"InputCore",
 				"UnrealEd",
