@@ -1,7 +1,7 @@
 {
 	"FileVersion": 3,
-	"Version": 4,
-	"VersionName": "2.2",
+	"Version": 5,
+	"VersionName": "2.3.1",
 	"FriendlyName": "UnrealMarkdown",
 	"Description": "A Markdown asset system for Unreal Engine. Import, edit, preview, and export .md files as native engine assets.",
 	"Category": "UI",
@@ -44,7 +44,8 @@
 		},
 		{
 			"Name": "ZBSAgent",
-			"Enabled": true
+			"Enabled": true,
+			"Optional": true
 		}
 	]
 }

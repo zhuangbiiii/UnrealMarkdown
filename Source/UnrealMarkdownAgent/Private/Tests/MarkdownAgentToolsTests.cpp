@@ -3,7 +3,8 @@
 
 #include "Misc/AutomationTest.h"
 
-#if WITH_AUTOMATION_TESTS && WITH_EDITOR
+// 工具本体不存在时这些用例也没有意义，因此一同包在宏里。
+#if WITH_AUTOMATION_TESTS && WITH_EDITOR && UE_ZBS_MARKDOWN_AGENT_TOOLS
 
 #include "MarkdownAgentTools.h"
 #include "MarkdownFile.h"

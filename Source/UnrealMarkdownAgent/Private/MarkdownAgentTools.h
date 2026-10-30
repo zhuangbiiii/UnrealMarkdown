@@ -4,6 +4,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
+
+// UE_ZBS_MARKDOWN_AGENT_TOOLS 由 UnrealMarkdownAgent.Build.cs 根据是否找到可用的
+// ZBSAgent 插件决定。为 0 时整个头文件为空，模块仍能正常编译与加载。
+#if UE_ZBS_MARKDOWN_AGENT_TOOLS
+
 #include "ZBSAgentToolProvider.h"
 
 /**
@@ -32,3 +37,5 @@ public:
 	/** 按工具名分派到查询、文本编辑或资产生命周期实现。 */
 	virtual FString Execute(const FZBSAgentToolCall& Call, bool& bOutSucceeded) override;
 };
+
+#endif // UE_ZBS_MARKDOWN_AGENT_TOOLS

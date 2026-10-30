@@ -8,7 +8,7 @@
 | 项 | 内容 |
 | --- | --- |
 | 上游 | `tzexeo` / UnrealMarkdown，MIT License |
-| 本地版本 | `Version: 3`，`VersionName: 2.1`（`UnrealMarkdown.uplugin`） |
+| 本地版本 | `Version: 5`，`VersionName: 2.3.1`（`UnrealMarkdown.uplugin`） |
 | 本地改动范围 | 运行时资产能力、编辑器工具栏与预览、内容浏览器右键菜单、MCP 工具集、自动化测试 |
 | 代码头 | 改动过的源文件改用 `// UnrealMarkdown - MIT License, see LICENSE in the plugin root.`，不套用 Epic 版权 |
 
@@ -19,7 +19,36 @@
 | `UnrealMarkdown` | Runtime | `UMarkdownFile` 资产、`UMarkdownSyntaxLibrary` 纯字符串语法工具、`LogUnrealMarkdown` 日志分类 |
 | `UnrealMarkdownEditor` | Editor | 导入工厂、重导入处理器、资产编辑器（源码 + 预览）、内容浏览器右键菜单、缩略图、自动化测试 |
 | `UnrealMarkdownMCP` | Editor | `UMarkdownToolset`，向 MCP 暴露 Markdown 资产的增删查改、导入导出、重导入 |
-| `UnrealMarkdownAgent` | Editor | `FMarkdownAgentTools`，向编辑器内 ZBS Agent 暴露三个 `markdown_*` 工具 |
+| `UnrealMarkdownAgent` | Editor | `FMarkdownAgentTools`，向编辑器内 ZBS Agent 暴露三个 `markdown_*` 工具。**ZBSAgent 是可选依赖** |
+
+## 依赖与降级
+
+`ZBSAgent` 在 `UnrealMarkdown.uplugin` 里写成 `"Optional": true`，并且
+`UnrealMarkdownAgent.Build.cs` 会探测它能否参与本次构建，据此决定要不要真的依赖 `ZBSAgentRuntime`。
+
+**为什么要探测，而不是直接写 Optional**：`.uplugin` 的 `Optional` 只影响插件解析；
+只要模块里还把 `ZBSAgentRuntime` 列进 `PrivateDependencyModuleNames`，插件不在时 UBT
+依然会在链接阶段报缺失模块。因此必须把模块依赖也变成条件式的。
+
+探测看两件事，缺一不可：
+
+1. `ZBSAgent.uplugin` 存在（工程 `Plugins/` 优先，其次引擎 `Plugins/`）。
+2. 工程 `.uproject` 没有把它显式写成 `"Enabled": false`。
+   只看文件不够：插件目录还在但被关掉时，它的模块不会编译，依赖它的模块仍会链接失败。
+
+结果写进编译宏 `UE_ZBS_MARKDOWN_AGENT_TOOLS`（`PrivateDefinitions`）：
+
+| 取值 | 行为 |
+| --- | --- |
+| `1` | 正常依赖 `ZBSAgentRuntime`，注册 `markdown_query` / `markdown_edit` / `markdown_asset` |
+| `0` | 不依赖 `ZBSAgentRuntime`；工具实现、注册、测试全部编掉，模块只留一句日志 |
+
+降级时启动日志会写一句
+「未检测到可用的 ZBSAgent 插件，Markdown Agent 工具未注册；Markdown 资产与编辑器功能不受影响」，
+这是有意保留的：静默不注册会让人以为插件坏了。
+
+读不到 `.uproject` 或解析失败时一律当作「没被禁用」，宁可让 UBT 报出明确的缺失模块，
+也不要因为读不懂工程文件就把功能悄悄关掉。
 
 ## 本地改造点
 
@@ -135,9 +164,18 @@ Agent 工具收敛成三个「一个工具多个 action」的入口，让模型�
 
 现成脚本是 `Tools/RunMarkdownTests.bat`。
 
-**最近一次全量结果（2026-10-29）**：`Found 5 automation tests`，
+**最近一次全量结果（2026-10-30）**：`Found 5 automation tests`，
 `AgentToolContract` / `AgentToolRoundTrip` / `AssetContent` / `FileIO` / `Syntax` **5/5 `{Success}`**，
-`GIsCriticalError=0`。
+`GIsCriticalError=0`；启动日志确认 `Markdown Agent 工具已注册`（即宏取值为 1）。
+
+宏取值为 0 的分支用不着跑完整 UBT 就能验：
+把 `Module.UnrealMarkdownAgent.cpp.obj.rsp` 去掉 `/Yu` `/Fp` 与 SharedPCH 的 `/FI`（再加 `/Y-`），
+各自指向一份把宏写成 0 / 1 的 `Definitions.*.h`，手工 `cl` 两遍。
+两者均 0 错误，obj 体积 12.7 MB 对 3.0 MB（后者只剩模块本身的样板代码）。
+
+发布包用 `Tools/PackagePluginRelease.ps1` 打，它同时负责两件容易做错的事：
+条目名强制用 `/` 分隔（`Compress-Archive` 写 `\`，Linux/macOS 会解成一个平铺文件），
+以及按 `.uplugin` 的 `Modules` 逐项核对每个模块都带了 `Build.cs`。
 
 ## 已知限制
 

@@ -3,6 +3,9 @@
 
 #include "MarkdownAgentTools.h"
 
+// MarkdownAgentTools.h 在没装 ZBSAgent 时是空的，这里也跟着整段不编。
+#if UE_ZBS_MARKDOWN_AGENT_TOOLS
+
 #include "MarkdownFile.h"
 #include "MarkdownSyntax.h"
 #include "UnrealMarkdown.h"
@@ -934,3 +937,5 @@ FString FMarkdownAgentTools::Execute(const FZBSAgentToolCall& Call, bool& bOutSu
 	const TSharedRef<FJsonObject> Result = MakeShared<FJsonObject>();
 	return Respond(Result, false, TEXT("Unknown Markdown tool."), TEXT("unknown_tool"));
 }
+
+#endif // UE_ZBS_MARKDOWN_AGENT_TOOLS
