@@ -1,4 +1,5 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+// UnrealMarkdown - MIT License, see LICENSE in the plugin root.
+// 本文件已按 ZBSStudio 的本地集成需要扩充。
 
 #include "MarkdownFileFactory.h"
 #include "MarkdownFile.h"
@@ -7,7 +8,6 @@
 #include "Misc/FileHelper.h"
 #include "Misc/MessageDialog.h"
 #include "Misc/Paths.h"
-#include "Editor.h"
 
 #define LOCTEXT_NAMESPACE "MarkdownFileFactory"
 

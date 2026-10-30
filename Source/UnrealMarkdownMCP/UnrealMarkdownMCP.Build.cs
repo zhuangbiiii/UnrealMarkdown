@@ -24,6 +24,8 @@ public class UnrealMarkdownMCP : ModuleRules
 			{
 				"UnrealEd",
 				"AssetRegistry",
+				// 导入任意文件、删除与复制资产都要走 IAssetTools。
+				"AssetTools",
 				"ToolsetRegistry",
 			}
 		);

@@ -86,4 +86,78 @@ public:
 	 */
 	UFUNCTION(meta = (AICallable), Category = "Markdown")
 	static TArray<FString> SearchMarkdownFiles(const FString& SearchTerm);
+
+	/**
+	 * Get the heading outline of a markdown asset.
+	 * @param AssetPath The asset path.
+	 * @return One entry per heading, formatted "Line|Level|Text"; empty when the asset has no headings.
+	 */
+	UFUNCTION(meta = (AICallable), Category = "Markdown")
+	static TArray<FString> GetMarkdownOutline(const FString& AssetPath);
+
+	// ========================================================================
+	// 增删查改的剩余部分
+	// ========================================================================
+
+	/**
+	 * Append text to the end of a markdown asset and save it.
+	 * @param AssetPath The asset path.
+	 * @param Text Text to append; a newline is inserted first when the asset does not end with one.
+	 * @return Success/error message.
+	 */
+	UFUNCTION(meta = (AICallable), Category = "Markdown")
+	static FString AppendMarkdownContent(const FString& AssetPath, const FString& Text);
+
+	/**
+	 * Replace text inside a markdown asset and save it.
+	 * @param AssetPath The asset path.
+	 * @param OldText Text to look for.
+	 * @param NewText Replacement text.
+	 * @param bReplaceAll Replace every occurrence when true, the first one otherwise.
+	 * @return Success/error message including the number of replacements.
+	 */
+	UFUNCTION(meta = (AICallable), Category = "Markdown")
+	static FString ReplaceInMarkdownContent(const FString& AssetPath, const FString& OldText, const FString& NewText, bool bReplaceAll);
+
+	/**
+	 * Save a markdown asset to disk without changing its content.
+	 * @param AssetPath The asset path.
+	 * @return Success/error message.
+	 */
+	UFUNCTION(meta = (AICallable), Category = "Markdown")
+	static FString SaveMarkdownFile(const FString& AssetPath);
+
+	/**
+	 * Rename or move a markdown asset.
+	 * @param AssetPath Current asset path.
+	 * @param NewAssetPath Destination asset path, e.g. "/Game/Docs/Renamed".
+	 * @return Success/error message.
+	 */
+	UFUNCTION(meta = (AICallable), Category = "Markdown")
+	static FString RenameMarkdownFile(const FString& AssetPath, const FString& NewAssetPath);
+
+	/**
+	 * Delete a markdown asset and its package file.
+	 * @param AssetPath The asset path.
+	 * @return Success/error message.
+	 */
+	UFUNCTION(meta = (AICallable), Category = "Markdown")
+	static FString DeleteMarkdownFile(const FString& AssetPath);
+
+	/**
+	 * Import a .md / .txt file on disk as a new markdown asset.
+	 * @param SourceFile Absolute path of the file to import.
+	 * @param AssetPath Destination asset path, e.g. "/Game/Docs/MyDoc".
+	 * @return Success/error message.
+	 */
+	UFUNCTION(meta = (AICallable), Category = "Markdown")
+	static FString ImportMarkdownFile(const FString& SourceFile, const FString& AssetPath);
+
+	/**
+	 * Re-read a markdown asset from the source file it was imported from.
+	 * @param AssetPath The asset path.
+	 * @return Success/error message; reports NoChange when the file content is identical.
+	 */
+	UFUNCTION(meta = (AICallable), Category = "Markdown")
+	static FString ReimportMarkdownFile(const FString& AssetPath);
 };

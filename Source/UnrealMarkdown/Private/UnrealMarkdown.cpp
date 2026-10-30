@@ -1,8 +1,10 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+// UnrealMarkdown - MIT License, see LICENSE in the plugin root.
 
 #include "UnrealMarkdown.h"
 
 #define LOCTEXT_NAMESPACE "FUnrealMarkdownModule"
+
+DEFINE_LOG_CATEGORY(LogUnrealMarkdown);
 
 void FUnrealMarkdownModule::StartupModule()
 {

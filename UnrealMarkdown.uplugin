@@ -1,7 +1,7 @@
 {
 	"FileVersion": 3,
-	"Version": 2,
-	"VersionName": "2.0",
+	"Version": 4,
+	"VersionName": "2.2",
 	"FriendlyName": "UnrealMarkdown",
 	"Description": "A Markdown asset system for Unreal Engine. Import, edit, preview, and export .md files as native engine assets.",
 	"Category": "UI",
@@ -29,6 +29,11 @@
 			"Name": "UnrealMarkdownMCP",
 			"Type": "Editor",
 			"LoadingPhase": "Default"
+		},
+		{
+			"Name": "UnrealMarkdownAgent",
+			"Type": "Editor",
+			"LoadingPhase": "Default"
 		}
 	],
 	"Plugins": [
@@ -36,6 +41,10 @@
 			"Name": "ToolsetRegistry",
 			"Enabled": true,
 			"Optional": true
+		},
+		{
+			"Name": "ZBSAgent",
+			"Enabled": true
 		}
 	]
 }
