@@ -93,8 +93,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Markdown")
 	bool ExportToFile(const FString& Filename, bool bUtf8 = true) const;
 
+#if WITH_EDITOR
 	// ---- UObject ----
+	// PostEditChangeProperty 只在编辑器构建的 UObject 上存在，此处必须同样只在
+	// 编辑器构建里声明，否则 Game 目标会因为「override 没有覆写任何基类成员」编不过。
 	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
+#endif
 
 private:
 	/** 内容变更后的统一收尾：标记脏包，让保存与关闭提示都能看到。 */

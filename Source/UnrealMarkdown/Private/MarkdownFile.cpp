@@ -205,6 +205,7 @@ bool UMarkdownFile::ExportToFile(const FString& Filename, bool bUtf8) const
 	return FFileHelper::SaveStringToFile(Content, *Filename, Encoding);
 }
 
+#if WITH_EDITOR
 void UMarkdownFile::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
 {
 	Super::PostEditChangeProperty(PropertyChangedEvent);
@@ -216,6 +217,7 @@ void UMarkdownFile::PostEditChangeProperty(FPropertyChangedEvent& PropertyChange
 		MarkContentChanged();
 	}
 }
+#endif // WITH_EDITOR
 
 void UMarkdownFile::MarkContentChanged()
 {
